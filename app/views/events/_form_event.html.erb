@@ -1,0 +1,21 @@
+<%= form_with model: @event do |form| %>
+  <% if @event.errors.any?%>
+    <div id = "error_explanation">
+      <h3><%= pluralize(@event.errors.count, "error")%> occurred:</h3>
+      <ul>
+        <% @event.errors.full_messages.each do |msg|%>
+        <li><%= msg%> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div><%= form.label :title %></div>
+  <div><%= form.text_area :title %></div>
+  <div><%= form.label :description %></div>
+  <div><%= form.text_area :description %></div>
+  <div><%= form.label :date %></div>
+  <div><%= form.date_field :date %></div>
+  <div><%= form.label :location %></div>
+  <div><%= form.text_area :location %></div>
+  <div><%= form.submit %></div>
+<% end %>
