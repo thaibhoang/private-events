@@ -22,7 +22,32 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    if @event.creator == current_user
+      render :edit
+    else
+      redirect_to root_path
+    end
+  end
 
+  def update
+    if @event.creator == current_user
+      if @event.update(params_event)
+        redirect_to @event
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      redirect_to root_path
+    end
+  end
+
+  def destroy
+    if @event.creator == current_user
+      @event.destroy
+    end
+    redirect_to root_path
+  end
 
   private
 

@@ -1,10 +1,20 @@
+<% if user_signed_in? && @event.creator == current_user %>
+  <%= link_to "Edit Event", edit_event_path %>
+  <%= link_to "Delete Event", @event, data: {
+    turbo_method: :delete,
+    turbo_confirm: "Are you sure?"
+  }%>
+<% end %>
 <h1><%= @event.title %></h1>
-
+<p>
 <div>About this event: </div>
 <div><%= @event.description %></div>
-
+</p>
+<p>
 <div>Time: </div>
 <div><%= @event.date %></div>
-
+</p>
+<p>
 <div>Location: </div>
 <div><%= @event.location %></div>
+</p>
