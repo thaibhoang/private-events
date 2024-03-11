@@ -6,6 +6,7 @@ class EventsController < ApplicationController
   end
 
   def show
+    @attendees_name = @event.tickets.pluck(:name)
   end
 
   def new
@@ -14,7 +15,7 @@ class EventsController < ApplicationController
 
   def create
     @user = current_user  
-    @event = @user.events.build(params_event)
+    @event = @user.events.build(event_params)
     if @event.save
       redirect_to @event
     else
@@ -32,7 +33,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.creator == current_user
-      if @event.update(params_event)
+      if @event.update(event_params)
         redirect_to @event
       else
         render :edit, status: :unprocessable_entity
@@ -51,7 +52,7 @@ class EventsController < ApplicationController
 
   private
 
-  def params_event 
+  def event_params 
     params.require(:event).permit(:title, :description, :date, :location)
   end
 
@@ -60,4 +61,5 @@ class EventsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path
   end
+
 end

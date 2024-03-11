@@ -1,8 +1,23 @@
-<h1>List of Events</h1>
-<ul>
-  <% @events.each do |event| %>
-    <li>
-      <%= link_to event.title, event_path(event) %>
-    </li>
-  <% end %>
-</ul>
+<% future_events = @events.future
+past_events = @events.past %>
+<% if future_events.any? %>
+  <h1>Upcoming Events</h1>
+  <ul>
+    <% future_events.each do |event| %>
+      <li>
+        <%= link_to event.title, event_path(event) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if past_events.any? %>
+  <h1>Ended Events</h1>
+  <ul>
+    <% past_events.each do |event| %>
+      <li>
+        <%= link_to event.title, event_path(event) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

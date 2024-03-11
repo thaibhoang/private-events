@@ -1,11 +1,42 @@
-<h1>My created events </h1>
+<% if @events.any? %>
+  <h1>My created events </h1>
 
+  <ul>
+    <% @events.each do |event| %>
+      <li>
+        <%= link_to event.title, event_path(event) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You events space is currently empty</p>
+<% end %>
 
-<ul>
-  <% @events.each do |event| %>
-    <li>
-      <%= link_to event.title events_path(event) %>
-    </li>
-  <% end %>
-</ul>
+<% future_events = @attended_events.where('date >= ?', Time.now) %>
+<% if future_events.any? %>
+  <h1>Upcoming booked events </h1>
+  <ul>
+    <% future_events.each do |event| %>
+      <li>
+        <%= link_to event.title, event_path(event) %>
+        <br>
+        <%= link_to "Delete Ticket", event_ticket_path(event, event.tickets.where(attendee_id: @user.id).first), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        }%>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
+<% past_events = @attended_events.where('date < ?', Time.now) %>
+<% if past_events.any? %>
+  <h1>Past booked events</h1>
+  <ul>
+    <% past_events.each do |event| %>
+      <li>
+        <%= link_to event.title, event_path(event) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

@@ -1,0 +1,19 @@
+<%= form_with model: [@event, @event.tickets.build] do |form| %>
+  <p>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+    <% if user_signed_in? %>
+      <%= form.hidden_field :attendee_id, value: current_user.id %>
+    <% end %>
+  </p>
+  <%= form.submit "Book Ticket" %>
+  <% if flash[:error].present? %>
+    <div class="error">
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+<% end %>
