@@ -1,3 +1,7 @@
+<% if @events.empty? && @attended_events.empty? %>
+  <p>You events space is currently empty</p>
+<% end %>
+
 <% if @events.any? %>
   <h1>My created events </h1>
 
@@ -8,8 +12,6 @@
       </li>
     <% end %>
   </ul>
-<% else %>
-  <p>You events space is currently empty</p>
 <% end %>
 
 <% future_events = @attended_events.where('date >= ?', Time.now) %>

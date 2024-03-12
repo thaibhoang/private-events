@@ -11,6 +11,6 @@ class Event < ApplicationRecord
   validates :description, presence: true
   validates :date, presence: true
   validates :location, presence: true
-  validates :prive, inclusion: { in: [true, false]}
+  validates :private, inclusion: { in: [true, false]}
 
 end

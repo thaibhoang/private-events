@@ -1,0 +1,11 @@
+<%= form_with model: [@event, @event.invitations.build] do |form| %>
+  <%= form.label :recipient_email %>
+  <%= form.text_field :recipient_email %>
+  <%= form.hidden_field :sender_id, value: current_user.id %>
+  <%= form.submit %>
+  <% if flash[:error].present? %>
+    <div class="error">
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+<% end %>
