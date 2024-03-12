@@ -1,9 +1,15 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show] 
   before_action :set_event, except: [:index, :new, :create]
-  def index
-    @events = Event.where(private: false).includes(:creator).order(created_at: :desc)
 
+  def index
+    if current_user
+      @events = Event.where(private: false)
+        .or(current_user.events.where(private: true)).includes(:creator).limit(20).order(created_at: :desc)
+      @invited_private_events = current_user.invited_events.distinct.limit(20).order(created_at: :desc)
+      else
+      @events = Event.where(private: false).includes(:creator).limit(20).order(created_at: :desc)
+    end
   end
 
   def show

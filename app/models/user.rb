@@ -8,5 +8,5 @@ class User < ApplicationRecord
   has_many :attended_events, through: :tickets, source: :event
   has_many :sent_invitations, foreign_key: "sender_id", class_name: "Invitation"
   has_many :received_invitations, foreign_key: "recipient_email", class_name: "Invitation", primary_key: "email"
-
+  has_many :invited_events, through: :received_invitations, source: :event
 end

@@ -1,7 +1,7 @@
 <% future_events = @events.future
 past_events = @events.past %>
 <% if future_events.any? %>
-  <h1>Upcoming Events</h1>
+  <h1>Upcoming Public Events</h1>
   <ul>
     <% future_events.each do |event| %>
       <li>
@@ -12,7 +12,7 @@ past_events = @events.past %>
 <% end %>
 
 <% if past_events.any? %>
-  <h1>Ended Events</h1>
+  <h1>Ended Public Events</h1>
   <ul>
     <% past_events.each do |event| %>
       <li>
@@ -20,4 +20,30 @@ past_events = @events.past %>
       </li>
     <% end %>
   </ul>
+<% end %>
+
+<% if @invited_private_events %>
+  <% future_private_events = @invited_private_events.where('date > ?', Time.now)
+  past_private_events = @invited_private_events.where('date < ?', Time.now) %>
+  <% if future_private_events.any? %>
+    <h1>Upcoming Private Events</h1>
+    <ul>
+      <% future_private_events.each do |event| %>
+        <li>
+          <%= link_to event.title, event_path(event) %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if past_private_events.any? %>
+    <h1>Ended Private Events</h1>
+    <ul>
+      <% past_private_events.each do |event| %>
+        <li>
+          <%= link_to event.title, event_path(event) %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 <% end %>
