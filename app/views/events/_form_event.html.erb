@@ -17,5 +17,7 @@
   <div><%= form.date_field :date %></div>
   <div><%= form.label :location %></div>
   <div><%= form.text_area :location %></div>
+  <div><%= form.label :private %></div>
+  <div><%= form.collection_radio_buttons :private, [[true, "Private"], [false, "Public"]], :first, :last %></div>
   <div><%= form.submit %></div>
 <% end %>
