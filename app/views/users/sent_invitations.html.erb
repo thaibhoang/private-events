@@ -1,0 +1,29 @@
+<% if @unread_sent_invitations.any? %>
+  <h1>Your not-been-accepted sent invitations</h1>
+
+  <% @unread_sent_invitations.each do |invitation| %>
+    <div>
+      <p> Event: <%= link_to invitation.event.title, event_path(invitation.event) %> </p>
+      <p> Recipient: <%= invitation.recipient_email %> </p>
+      <p>
+        <%= link_to "Remove Invitation", reject_invitation_path(invitation), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        } %>
+      </p>
+    </div>
+    <hr>
+  <% end %>
+<% end %>
+
+<% if @accepted_sent_invitations.any? %>
+  <h1>Your been-accepted sent invitations</h1>
+
+  <% @accepted_sent_invitations.each do |invitation| %>
+    <div>
+      <p> Event: <%= link_to invitation.event.title, event_path(invitation.event) %> </p>
+      <p> Recipient: <%= invitation.recipient_email %> </p>
+    </div>
+    <hr>
+  <% end %>
+<% end %>

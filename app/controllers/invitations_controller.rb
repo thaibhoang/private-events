@@ -20,12 +20,25 @@ class InvitationsController < ApplicationController
     end
   end
 
-  def destroy
+  def accept
     @invitation = Invitation.find(params[:id])
-    if @invitation.sender == current_user
-      @invitation.destroy
+    @invitation.accepted = true
+
+    if @invitation.save
+      flash[:notice] = 'Invitation accepted!'
+    else
+      flash[:error] = "Failed to accept invitation."
     end
-    redirect_to root_path
+
+    redirect_to current_user
+  end
+
+  def reject
+    @invitation = Invitation.find(params[:id])
+    @invitation.destroy
+
+    flash[:notice] = 'Invitation rejected!'
+    redirect_to current_user
   end
 
   private

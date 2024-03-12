@@ -15,7 +15,9 @@
     <%= link_to "Home", root_path %>
     <% if user_signed_in? %>
       <%= link_to "My Events", user_path(current_user) %>
-      <%= link_to "Profile", edit_user_registration_path %>
+      <%= link_to "Inbox", invitations_user_path(current_user) %>
+      <%= link_to "My sent invitations", sent_invitations_user_path(current_user) %>
+      <%= link_to "Profile", edit_user_registration_path %>      
       <%= link_to "Log out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
     <% else %>
       <%= link_to "Sign in", new_user_session_path %>

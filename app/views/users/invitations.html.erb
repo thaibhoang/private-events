@@ -1,0 +1,39 @@
+<% if @unread_invitations.any? %>
+  <h1>Your awaiting invitations</h1>
+  <% @unread_invitations.each do |invitation| %>
+    <div>
+      <p> Event: <%= link_to invitation.event.title, event_path(invitation.event) %> </p>
+      <p> Sender: <%= invitation.sender.email %> </p>
+      <p>
+        <%= link_to "Reject Invitation", reject_invitation_path(invitation), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        } %>
+        <%= link_to "Accept Invitation", accept_invitation_path(invitation), data: {
+          turbo_method: :put,
+          turbo_confirm: "Are you sure?"
+        } %>
+      </p>
+    </div>
+    <hr>
+  <% end %>
+<% end %>
+
+<% if @accepted_invitations.any? %>
+  <h1>Your accepted invitations</h1>
+
+  <% @accepted_invitations.each do |invitation| %>
+    <div>
+      <p> Event: <%= link_to invitation.event.title, event_path(invitation.event) %> </p>
+      <p> Sender: <%= invitation.sender.email %> </p>
+      <p>
+        <%= link_to "Reject Invitation", reject_invitation_path(invitation), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        } %>
+        <%= link_to "Go to event", event_path(invitation.event) %>
+      </p>
+    </div>
+    <hr>
+  <% end %>
+<% end %>

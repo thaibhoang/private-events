@@ -2,9 +2,20 @@ Rails.application.routes.draw do
   devise_for :users
   resources :events do
     resources :tickets
-    resources :invitations
+    resources :invitations, only: [:create]
   end
-  resources :users
+  resources :users do
+    get "invitations", on: :member
+    get "sent_invitations", on: :member
+  end
+  resources :invitations, only: [] do
+    member do
+      put 'accept'
+      delete 'reject'
+    end
+  end
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
